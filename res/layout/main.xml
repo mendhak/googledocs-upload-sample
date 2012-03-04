@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            />
+    
+    <Button android:id="@+id/ButtonAuthorize" android:text="Authorize"
+            android:layout_width="fill_parent" android:layout_height="wrap_content" />
+
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            />
+
+    <Button android:id="@+id/ButtonClear" android:text="Unauthorize"
+            android:layout_width="fill_parent" android:layout_height="wrap_content" />
+
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            />
+
+    <Button android:id="@+id/ButtonUpload" android:text="Upload file to GDocs"
+            android:layout_width="fill_parent" android:layout_height="wrap_content" />
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Check your Google Docs after clicking this button to see if a file has been created.  If the file already exists, it will be updated."
+            />
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            />
+    <TextView
+            android:id="@+id/lblStatus"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="..."
+            />
+
+
+</LinearLayout>
+
