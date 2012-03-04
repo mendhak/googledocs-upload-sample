@@ -8,10 +8,10 @@ import com.google.api.client.auth.oauth2.draft10.AccessTokenResponse;
 public class OAuth2Client
 {
     /** Value of the "Client ID" shown under "Client ID for installed applications". */
-    public static final String CLIENT_ID = ".........................";
+    public static final String CLIENT_ID = "889382808911.apps.googleusercontent.com";
 
     /** Value of the "Client secret" shown under "Client ID for installed applications". */
-    public static final String CLIENT_SECRET = "...............";
+    public static final String CLIENT_SECRET = "idzyP8I8ynjNgri_XSqHkTrx";
 
     /** OAuth 2 scope to use */
     //https://docs.google.com/feeds/ gives full access to the user's documents
