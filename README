@@ -1,1 +1,9 @@
-This file was created by IntelliJ IDEA 11.0.2 for binding GitHub repository
+This is a sample Android application which uses the [google-api-java-client](http://code.google.com/p/google-api-java-client/) library.
+
+This app will
+
+*  Perform OAuth2 authorization against Google Docs
+*  Upload a file to Google Docs (inside a folder)
+*  Update a file on Google Docs
+
+I'm creating this sample app because there is very little in the way of examples on uploading to Google Docs and using the google-api-java-client library.
