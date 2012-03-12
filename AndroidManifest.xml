@@ -12,7 +12,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".OAuth2AuthorizationActivity" android:label="Authorize with Google Docs"/>
+        <activity android:name=".PureJavaUploadActivity" android:label="Pure Java version">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest> 
