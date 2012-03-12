@@ -11,10 +11,10 @@ public class OAuth2Client
     //Obviously, this ClientID and ClientSecret are examples, use your own as these are revoked
 
     /** Value of the "Client ID" shown under "Client ID for installed applications". */
-    public static final String CLIENT_ID = "889382808911.apps.googleusercontent.com";
+    public static final String CLIENT_ID = "..............";
 
     /** Value of the "Client secret" shown under "Client ID for installed applications". */
-    public static final String CLIENT_SECRET = "idzyP8I8ynjNgri_XSqHkTrx";
+    public static final String CLIENT_SECRET = ".............";
 
     /** OAuth 2 scope to use */
     //https://docs.google.com/feeds/ gives full access to the user's documents
