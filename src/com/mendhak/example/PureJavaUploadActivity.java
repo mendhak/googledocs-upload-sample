@@ -5,8 +5,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,7 +29,7 @@ import java.net.URL;
 public class PureJavaUploadActivity extends Activity
 {
     
-    String authToken;
+    //String authToken;
     AccountManager accountManager;
     
     /** Called when the activity is first created. */
@@ -51,7 +53,7 @@ public class PureJavaUploadActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                authToken = null;
+                SaveAuthToken("");
                 SetStatus("Cleared auth token");
             }
         });
@@ -138,7 +140,10 @@ public class PureJavaUploadActivity extends Activity
         {
             try
             {
-                authToken = bundleAccountManagerFuture.getResult().getString(AccountManager.KEY_AUTHTOKEN);
+                String authToken = bundleAccountManagerFuture.getResult().getString(AccountManager.KEY_AUTHTOKEN);
+
+                SaveAuthToken(authToken);
+
                 SetStatus(authToken);
             }
             catch (Exception e)
@@ -148,6 +153,21 @@ public class PureJavaUploadActivity extends Activity
 
         }
     }
+    
+    private String GetAuthToken()
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return prefs.getString("GDOCS_AUTH_TOKEN","");
+
+    }
+
+    private void SaveAuthToken(String authToken)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("GDOCS_AUTH_TOKEN",authToken);
+        editor.commit();
+    }
 
 
     private void Authorize()
@@ -155,7 +175,7 @@ public class PureJavaUploadActivity extends Activity
         //To revoke access, adb -e shell 'sqlite3 /data/system/accounts.db "delete from grants;"'
         if (accountManager != null)
         {
-            accountManager.invalidateAuthToken("com.google", authToken);
+            accountManager.invalidateAuthToken("com.google", GetAuthToken());
         }
 
         accountManager = AccountManager.get(this);
@@ -174,7 +194,7 @@ public class PureJavaUploadActivity extends Activity
 
         Authorize();
 
-        if(IsNullOrEmpty(authToken))
+        if(IsNullOrEmpty(GetAuthToken()))
         {
             SetStatus("No access token available, you're not authorized");
             return;
@@ -182,12 +202,12 @@ public class PureJavaUploadActivity extends Activity
 
         try
         {
-            String gpsLoggerFolderFeed = SearchForGpsLoggerFolder(authToken);
+            String gpsLoggerFolderFeed = SearchForGpsLoggerFolder(GetAuthToken());
             
             if(IsNullOrEmpty(gpsLoggerFolderFeed))
             {
                 //Couldn't find anything, need to create it. 
-                gpsLoggerFolderFeed = CreateFolder(authToken);
+                gpsLoggerFolderFeed = CreateFolder(GetAuthToken());
             }
             
             SetStatus(gpsLoggerFolderFeed);
@@ -262,7 +282,7 @@ public class PureJavaUploadActivity extends Activity
             conn = (HttpURLConnection) url.openConnection();
             conn.addRequestProperty("client_id", OAuth2Client.CLIENT_ID);
             conn.addRequestProperty("client_secret", OAuth2Client.CLIENT_SECRET);
-            conn.setRequestProperty("Authorization", "OAuth " + authToken);
+            conn.setRequestProperty("Authorization", "OAuth " + GetAuthToken());
 
             conn.setRequestProperty("X-Upload-Content-Length", String.valueOf(fileContents.length())); //back to 0
             conn.setRequestProperty("X-Upload-Content-Type", "text/xml");
@@ -344,7 +364,7 @@ public class PureJavaUploadActivity extends Activity
             conn.addRequestProperty("client_secret", OAuth2Client.CLIENT_SECRET);
             conn.setRequestProperty("GData-Version", "3.0");
             conn.setRequestProperty("User-Agent", "GPSLogger for Android");
-            conn.setRequestProperty("Authorization", "OAuth " + authToken);
+            conn.setRequestProperty("Authorization", "OAuth " + GetAuthToken());
 
             Document doc = GetDocumentFromInputStream(conn.getInputStream());
             fal.CreateUrl = GetFileUploadUrl(doc);

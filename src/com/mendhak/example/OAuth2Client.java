@@ -7,6 +7,9 @@ import com.google.api.client.auth.oauth2.draft10.AccessTokenResponse;
 
 public class OAuth2Client
 {
+
+    //Obviously, this ClientID and ClientSecret are examples, use your own as these are revoked
+
     /** Value of the "Client ID" shown under "Client ID for installed applications". */
     public static final String CLIENT_ID = "889382808911.apps.googleusercontent.com";
 
