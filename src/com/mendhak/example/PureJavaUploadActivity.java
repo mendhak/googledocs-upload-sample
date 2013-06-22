@@ -71,8 +71,6 @@ public class PureJavaUploadActivity extends Activity
             public void onClick(View view)
             {
                 Authorize();
-                //startActivity(new Intent().setClass(getApplicationContext(), OAuth2AuthorizationActivity.class));
-
             }
         });
 
@@ -276,10 +274,15 @@ public class PureJavaUploadActivity extends Activity
                 gpxFileId = CreateFileMetadata(GetAuthToken(), "upload_test.gpx", gpsLoggerFolderId);
             }
 
-            //Update the file
-            UpdateFileContents(GetAuthToken(), gpxFileId);
-
-
+            if(gpxFileId != null)
+            {
+                //Update the file
+                UpdateFileContents(GetAuthToken(), gpxFileId);
+            }
+            else
+            {
+                SetStatus("Could not write to Google Drive");
+            }
 
         }
         catch (Exception e)
@@ -312,9 +315,6 @@ public class PureJavaUploadActivity extends Activity
 
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("PUT");
-            conn.addRequestProperty("client_id", OAuth2Client.CLIENT_ID);
-            conn.addRequestProperty("client_secret", OAuth2Client.CLIENT_SECRET);
-            conn.setRequestProperty("GData-Version", "3.0");
             conn.setRequestProperty("User-Agent", "GPSLogger for Android");
             conn.setRequestProperty("Authorization", "Bearer " + authToken);
             conn.setRequestProperty("Content-Type", "application/xml");
@@ -339,8 +339,6 @@ public class PureJavaUploadActivity extends Activity
         }
         catch (Exception e)
         {
-
-            System.out.println(e.getMessage());
             System.out.println(e.getMessage());
         }
         finally
@@ -357,7 +355,6 @@ public class PureJavaUploadActivity extends Activity
 
     private String CreateFileMetadata(String authToken, String fileName, String parentFolderId)
     {
-
 
         String folderId = null;
         HttpURLConnection conn = null;
@@ -377,7 +374,6 @@ public class PureJavaUploadActivity extends Activity
         try
         {
 
-
             if (Integer.parseInt(Build.VERSION.SDK) < Build.VERSION_CODES.FROYO)
             {
                 //Due to a pre-froyo bug
@@ -389,9 +385,6 @@ public class PureJavaUploadActivity extends Activity
 
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            conn.addRequestProperty("client_id", OAuth2Client.CLIENT_ID);
-            conn.addRequestProperty("client_secret", OAuth2Client.CLIENT_SECRET);
-            conn.setRequestProperty("GData-Version", "3.0");
             conn.setRequestProperty("User-Agent", "GPSLogger for Android");
             conn.setRequestProperty("Authorization", "Bearer " + authToken);
             conn.setRequestProperty("Content-Type", "application/json");
@@ -410,7 +403,6 @@ public class PureJavaUploadActivity extends Activity
 
 
             String createFolderDoc = GetStringFromInputStream(conn.getInputStream());
-
 
             JSONObject folderJson = new JSONObject(createFolderDoc);
             folderId = folderJson.getString("id");
@@ -458,7 +450,6 @@ public class PureJavaUploadActivity extends Activity
         try
         {
 
-
             if (Integer.parseInt(Build.VERSION.SDK) < Build.VERSION_CODES.FROYO)
             {
                 //Due to a pre-froyo bug
@@ -470,9 +461,6 @@ public class PureJavaUploadActivity extends Activity
 
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            conn.addRequestProperty("client_id", OAuth2Client.CLIENT_ID);
-            conn.addRequestProperty("client_secret", OAuth2Client.CLIENT_SECRET);
-            conn.setRequestProperty("GData-Version", "3.0");
             conn.setRequestProperty("User-Agent", "GPSLogger for Android");
             conn.setRequestProperty("Authorization", "Bearer " + authToken);
             conn.setRequestProperty("Content-Type", "application/json");
@@ -489,9 +477,7 @@ public class PureJavaUploadActivity extends Activity
 
             folderId = null;
 
-
             String createFolderDoc = GetStringFromInputStream(conn.getInputStream());
-
 
             JSONObject folderJson = new JSONObject(createFolderDoc);
             folderId = folderJson.getString("id");
@@ -569,9 +555,6 @@ public class PureJavaUploadActivity extends Activity
 
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
-            conn.addRequestProperty("client_id", OAuth2Client.CLIENT_ID);
-            conn.addRequestProperty("client_secret", OAuth2Client.CLIENT_SECRET);
-            conn.setRequestProperty("GData-Version", "3.0");
             conn.setRequestProperty("User-Agent", "GPSLogger for Android");
             conn.setRequestProperty("Authorization", "OAuth " + authToken);
 
