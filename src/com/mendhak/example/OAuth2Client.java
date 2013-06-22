@@ -10,11 +10,13 @@ public class OAuth2Client
 
     //Obviously, this ClientID and ClientSecret are examples, use your own as these are revoked
 
+    //Make sure you register your app in the API console along with the Android SHA1 fingerprint and package name.
+
     /** Value of the "Client ID" shown under "Client ID for installed applications". */
-    public static final String CLIENT_ID = "..............";
+    public static final String CLIENT_ID = "889382808911-eekkrculheb412bb32la0099h326kr08.apps.googleusercontent.com";
 
     /** Value of the "Client secret" shown under "Client ID for installed applications". */
-    public static final String CLIENT_SECRET = ".............";
+    public static final String CLIENT_SECRET = "elz0BfHBZQcLS9LubAvxFVmn";
 
     /** OAuth 2 scope to use */
     //https://docs.google.com/feeds/ gives full access to the user's documents
